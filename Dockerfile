@@ -6,8 +6,6 @@ COPY . .
 
 RUN npm install
 
-RUN apk add gettext
-
 EXPOSE 8080
 
 ENTRYPOINT [ "node", "src/index.js"]
