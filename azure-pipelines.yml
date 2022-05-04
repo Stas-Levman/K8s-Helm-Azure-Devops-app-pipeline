@@ -32,6 +32,7 @@ stages:
         repository: 'bootcamp-app'
         command: 'build'
         Dockerfile: 'Dockerfile'
+        tags: $(Build.BuildId)
 
   - job: Push
     displayName: Push to registry
