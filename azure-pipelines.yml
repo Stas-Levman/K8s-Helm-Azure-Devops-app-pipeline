@@ -1,9 +1,11 @@
 
-
-# trigger:
-#   paths:
-#     exclude:
-#     - README.md
+resources:
+  repositories: 
+    - repository: NodsJS-web-app-with-Kubernetes-and-Helm
+      type: github
+      name: sincros121/NodsJS-web-app-with-Kubernetes-and-Helm
+      ref: master
+      endpoint: sincros121
 
 pool: azure-vm
 
@@ -19,6 +21,8 @@ stages:
     - checkout: self
       displayName: Clone latest web-application repo
     
+    
+
     - task: Docker@2
       displayName: Docker build
       inputs:
