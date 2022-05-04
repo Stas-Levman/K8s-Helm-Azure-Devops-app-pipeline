@@ -26,11 +26,10 @@ stages:
     - task: Docker@2
       displayName: Docker build
       inputs:
-        command: 'build'
-        Dockerfile: 'dockerfile'
-        tags: '$(Build.BuildId)'
+        containerRegistry: 'Private ACR'
         repository: 'bootcamp-app'
-        containerRegistry: 'private-registry'
+        command: 'build'
+        Dockerfile: 'Dockerfile'
 
   - job: Push
     displayName: Push to registry
@@ -40,7 +39,7 @@ stages:
     steps:
     - task: Docker@2
       inputs:
-        containerRegistry: 'private-registry'
+        containerRegistry: 'Private ACR'
         repository: 'bootcamp-app'
         command: 'push'
         tags: '$(Build.BuildId)'
@@ -55,7 +54,7 @@ stages:
   variables: 
   - group: vault secrets - stage
   - name: ip_address
-    value: $(az network public-ip show -g weight-tracker-stage-rg -n front-public-ip --query ipAddress | tr -d '"')
+    value: $(az network public-ip list -g web-app-k8s-resources --query "[?tags.service].ipAddress | [0]" | tr -d '"')
 
   jobs:
   - deployment: deployToStage
