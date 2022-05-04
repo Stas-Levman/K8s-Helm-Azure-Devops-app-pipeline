@@ -49,15 +49,15 @@ stages:
 
 
 
-# - stage: Stage_deployment
-#   displayName: Stage
-#   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-#   dependsOn: CI
+- stage: Stage_deployment
+  displayName: Stage
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  dependsOn: CI
   
-#   variables: 
-#   - group: vault secrets - stage
-#   - name: ip_address
-#     value: $(az network public-ip list -g web-app-k8s-resources --query "[?tags.service].ipAddress | [0]" | tr -d '"')
+  variables: 
+  - group: vault secrets - stage
+  - name: ip_address
+    value: $(az network public-ip list -g web-app-k8s-resources --query "[?tags.service].ipAddress | [0]" | tr -d '"')
 
 #   jobs:
 #   - deployment: deployToStage
