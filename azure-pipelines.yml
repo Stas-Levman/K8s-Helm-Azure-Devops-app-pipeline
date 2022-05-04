@@ -5,7 +5,7 @@ resources:
       type: github
       name: sincros121/NodsJS-web-app-with-Kubernetes-and-Helm
       ref: master
-      endpoint: sincros121
+      endpoint: github.com_sincros121
 
 trigger: none
 
