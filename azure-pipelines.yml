@@ -42,6 +42,9 @@ stages:
     #     command: 'build'
     #     Dockerfile: './Weight tracker - K8S and Helm/Dockerfile'
     #     tags: $(Build.BuildId)
+
+    - script: |
+         helm dependency update $(HelmDirectory)
   
     - script: |
         helm lint $(HelmDirectory) -f "$(stage_values.secureFilePath)"
