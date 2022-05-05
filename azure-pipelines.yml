@@ -62,7 +62,7 @@ stages:
         inlineScript: |
           az --version
           az account show
-        # addSpnToEnvironment: true
+        addSpnToEnvironment: true
 
     - task: DownloadSecureFile@1
       name: stage_values
