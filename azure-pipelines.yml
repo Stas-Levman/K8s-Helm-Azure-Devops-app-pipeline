@@ -34,17 +34,18 @@ stages:
       name: stage_values
       inputs:
         secureFile: 'stage-values.yaml'
-    # - task: Docker@2
-    #   displayName: Docker build
-    #   inputs:
-    #     containerRegistry: 'Private ACR'
-    #     repository: 'bootcamp-app'
-    #     command: 'build'
-    #     Dockerfile: './Weight tracker - K8S and Helm/Dockerfile'
-    #     tags: $(Build.BuildId)
+    - task: Docker@2
+      displayName: Docker build
+      inputs:
+        containerRegistry: 'Private ACR'
+        repository: 'bootcamp-app'
+        command: 'build'
+        Dockerfile: './Weight tracker - K8S and Helm/Dockerfile'
+        tags: $(Build.BuildId)
 
     - script: |
          helm dependency update $(HelmDirectory)
+      displayName: Update chart dependencies
   
     - script: |
         helm lint $(HelmDirectory) -f "$(stage_values.secureFilePath)"
@@ -52,23 +53,25 @@ stages:
 
     - script: |
         helm package $(HelmDirectory) --version $(Build.BuildId) --destination $(HelmDirectory)/packages
+      displayName: Package Helm chart
 
-  # - job: Push
-  #   displayName: Push image and Helm chart to registry
-  #   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-  #   dependsOn: Build
+  - job: Push
+    displayName: Push image and Helm chart to registry
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    dependsOn: Build
 
-  #   steps:
-  #   - task: Docker@2
-  #     inputs:
-  #       containerRegistry: 'Private ACR'
-  #       repository: 'bootcamp-app'
-  #       command: 'push'
-  #       tags: '$(Build.BuildId)'
+    steps:
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'Private ACR'
+        repository: 'bootcamp-app'
+        command: 'push'
+        tags: '$(Build.BuildId)'
 
-  #   - script: |
+    - script: |
+        helm push $(HelmDirectory)/packages/web-app-chart-$(Build.BuildId).tgz oci://staslregistry.azurecr.io
 
-    # - script: |
+
 
 
 
