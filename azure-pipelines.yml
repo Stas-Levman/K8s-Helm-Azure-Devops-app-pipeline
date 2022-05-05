@@ -27,7 +27,7 @@ stages:
       displayName: Clone Helm chart repo
 
     - task: DownloadSecureFile@1
-      name: stage-values
+      name: stage_values
       inputs:
         secureFile: 'stage-values.yaml'
     # - task: Docker@2
@@ -40,10 +40,10 @@ stages:
     #     tags: $(Build.BuildId)
 
     - script: |
-        echo $(stage-values.secureFilePath)
+        echo $(stage_values.secureFilePath)
   
     - script: |
-        helm lint ./NodsJS-web-app-with-Kubernetes-and-Helm -f $(stage-stage.secureFilePath)
+        helm lint ./NodsJS-web-app-with-Kubernetes-and-Helm -f $(stage_stage.secureFilePath)
       displayName: Check chart validity
 
   # - job: Push
