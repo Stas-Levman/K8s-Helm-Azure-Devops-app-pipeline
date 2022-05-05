@@ -119,6 +119,9 @@ stages:
 #               containerRegistry: 'private-registry'
 #               command: 'login'
               
+          - script: 
+              echo $(ip_address)
+
           - script: |
               helm upgrade --install --namespace stage --create-namespace web-app-stage oci://staslregistry.azurecr.io/web-app-chart --version $(Build.BuildId) -f "$(stage_values.secureFilePath)" --atomic  --set ip_address=$(ip_address)
 
