@@ -60,8 +60,7 @@ stages:
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: |
-          az --version
-          az account show
+          az acr login -n staslregistry
         addSpnToEnvironment: true
 
     - task: DownloadSecureFile@1
