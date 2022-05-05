@@ -69,7 +69,7 @@ stages:
         tags: '$(Build.BuildId)'
 
     - script: |
-        helm push $(HelmDirectory)/packages/web-app-chart-$(Build.BuildId).tgz oci://staslregistry.azurecr.io
+        helm push $(HelmDirectory)/packages/web-app-chart-$(Build.BuildId).tgz "oci://staslregistry.azurecr.io"
 
 
 
