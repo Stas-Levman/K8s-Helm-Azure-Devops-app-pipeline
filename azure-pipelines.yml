@@ -46,18 +46,18 @@ stages:
         helm lint ./NodsJS-web-app-with-Kubernetes-and-Helm -f $(stage-stage.secureFilePath)
       displayName: Check chart validity
 
-  - job: Push
-    displayName: Push image and Helm chart to registry
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-    dependsOn: Build
+  # - job: Push
+  #   displayName: Push image and Helm chart to registry
+  #   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  #   dependsOn: Build
 
-    steps:
-    - task: Docker@2
-      inputs:
-        containerRegistry: 'Private ACR'
-        repository: 'bootcamp-app'
-        command: 'push'
-        tags: '$(Build.BuildId)'
+  #   steps:
+  #   - task: Docker@2
+  #     inputs:
+  #       containerRegistry: 'Private ACR'
+  #       repository: 'bootcamp-app'
+  #       command: 'push'
+  #       tags: '$(Build.BuildId)'
 
     # - script: |
 
