@@ -35,7 +35,7 @@ stages:
         containerRegistry: 'Private ACR'
         repository: 'bootcamp-app'
         command: 'build'
-        Dockerfile: 'Dockerfile'
+        Dockerfile: 'Weight tracker - K8S and Helm/Dockerfile'
         tags: $(Build.BuildId)
 
     - script: |
