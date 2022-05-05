@@ -116,7 +116,12 @@ stages:
 #             inputs:
 #               containerRegistry: 'private-registry'
 #               command: 'login'
-              
+          - task: DownloadSecureFile@1
+            name: stage_values
+            displayName: Download chart values file
+            inputs:
+              secureFile: 'stage-values.yaml'
+
           - script: 
               echo $(ip_address)
 
