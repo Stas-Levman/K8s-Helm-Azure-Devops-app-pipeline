@@ -28,7 +28,7 @@ stages:
 
     - task: DownloadSecureFile@1
       inputs:
-        secureFile: 'stage-values'
+        secureFile: 'stageValues'
     - task: Docker@2
       displayName: Docker build
       inputs:
@@ -39,10 +39,10 @@ stages:
         tags: $(Build.BuildId)
 
     - script: |
-        echo $(stage-values.secureFilePath)
+        echo "$(stageValues.secureFilePath)"
   
     - script: |
-        helm lint ./NodsJS-web-app-with-Kubernetes-and-Helm -f $(stage-values.secureFilePath)
+        helm lint ./NodsJS-web-app-with-Kubernetes-and-Helm -f $(stageValues.secureFilePath)
       displayName: Check chart validity
 
   - job: Push
