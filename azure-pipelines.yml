@@ -14,6 +14,10 @@ pool: azure-vm
 stages:
 - stage: CI
   displayName: Build
+
+  variables:
+  - name: HelmDirectory
+    value: ./NodsJS-web-app-with-Kubernetes-and-Helm
   
   jobs:
   - job: Build
@@ -44,7 +48,7 @@ stages:
       displayName: Check chart validity
 
     - script: |
-        helm package ./ --version (Build.BuildId) --destination ./packages
+        helm package ./NodsJS-web-app-with-Kubernetes-and-Helm --version $(Build.BuildId) --destination ./NodsJS-web-app-with-Kubernetes-and-Helm/packages
 
   # - job: Push
   #   displayName: Push image and Helm chart to registry
