@@ -35,11 +35,11 @@ stages:
         containerRegistry: 'Private ACR'
         repository: 'bootcamp-app'
         command: 'build'
-        Dockerfile: 'Weight tracker - K8S and Helm/Dockerfile'
+        Dockerfile: './Weight tracker - K8S and Helm/Dockerfile'
         tags: $(Build.BuildId)
 
     - script: |
-        helm lint -f "$(stage-values.yaml.secureFilePath)"
+        helm lint ./NodsJS-web-app-with-Kubernetes-and-Helm -f "$(stage-values.yaml.secureFilePath)"
       displayName: Check chart validity
 
   - job: Push
