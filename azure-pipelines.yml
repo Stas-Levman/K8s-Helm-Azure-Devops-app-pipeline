@@ -29,7 +29,7 @@ stages:
         containerRegistry: 'Private ACR'
         repository: 'bootcamp-app'
         command: 'build'
-        Dockerfile: './Weight tracker - K8S and Helm/Dockerfile'
+        Dockerfile: './Dockerfile'
         tags: $(Build.BuildId)
 
   - job: PushImage
@@ -50,9 +50,9 @@ stages:
     displayName: Package and push chart
     dependsOn: PushImage
 
-    variables:
-    - name: HelmDirectory
-      value: ./NodsJS-web-app-with-Kubernetes-and-Helm
+    # variables:
+    # - name: HelmDirectory
+    #   value: ./NodsJS-web-app-with-Kubernetes-and-Helm
 
     steps: 
     - checkout: NodsJS-web-app-with-Kubernetes-and-Helm
@@ -65,19 +65,19 @@ stages:
         secureFile: 'stage-values.yaml'
 
     - script: |
-         helm dependency update $(HelmDirectory)
+         helm dependency update ./
       displayName: Update chart dependencies
   
     - script: |
-        helm lint $(HelmDirectory) -f "$(stage_values.secureFilePath)"
+        helm lint ./ -f "$(stage_values.secureFilePath)"
       displayName: Check chart validity
 
     - script: |
-        helm package $(HelmDirectory) --version $(Build.BuildId) --destination $(HelmDirectory)/packages
+        helm package ./ --version $(Build.BuildId) --destination ./packages
       displayName: Package Helm chart
 
     - script: |
-        helm push $(HelmDirectory)/packages/web-app-chart-$(Build.BuildId).tgz oci://staslRegistry.azurecr.io
+        helm push ./packages/web-app-chart-$(Build.BuildId).tgz oci://staslRegistry.azurecr.io
 
 # Had to create a seperate job for the pakcage as azaure devops is masking any 
   # - job: PushPackage
