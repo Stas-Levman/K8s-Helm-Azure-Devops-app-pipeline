@@ -40,6 +40,7 @@ stages:
 
     - script: |
         helm lint -f "$(stage-values.yaml.secureFilePath)"
+      displayName: Check chart validity
 
   - job: Push
     displayName: Push image and Helm chart to registry
