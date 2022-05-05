@@ -44,11 +44,11 @@ stages:
     #     tags: $(Build.BuildId)
   
     - script: |
-        helm lint ./NodsJS-web-app-with-Kubernetes-and-Helm -f "$(stage_values.secureFilePath)"
+        helm lint $(HelmDirectory) -f "$(stage_values.secureFilePath)"
       displayName: Check chart validity
 
     - script: |
-        helm package ./NodsJS-web-app-with-Kubernetes-and-Helm --version $(Build.BuildId) --destination ./NodsJS-web-app-with-Kubernetes-and-Helm/packages
+        helm package $(HelmDirectory) --version $(Build.BuildId) --destination $(HelmDirectory)/packages
 
   # - job: Push
   #   displayName: Push image and Helm chart to registry
