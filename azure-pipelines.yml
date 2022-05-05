@@ -48,7 +48,7 @@ stages:
     
   - job: PackageChart
     displayName: Package and push chart
-    dependsOn: PushImage
+    # dependsOn: PushImage
 
     steps: 
     - checkout: NodsJS-web-app-with-Kubernetes-and-Helm
