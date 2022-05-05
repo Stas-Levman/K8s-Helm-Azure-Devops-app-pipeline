@@ -14,10 +14,6 @@ pool: azure-vm
 stages:
 - stage: CI
   displayName: Build
-
-  variables:
-  - name: HelmDirectory
-    value: ./NodsJS-web-app-with-Kubernetes-and-Helm
   
   jobs:
   - job: Build
@@ -54,6 +50,10 @@ stages:
     displayName: Package and push chart
     dependsOn: PushImage
 
+    variables:
+    - name: HelmDirectory
+      value: ./NodsJS-web-app-with-Kubernetes-and-Helm
+
     steps: 
     - checkout: NodsJS-web-app-with-Kubernetes-and-Helm
       displayName: Clone Helm chart repo
@@ -77,7 +77,7 @@ stages:
       displayName: Package Helm chart
 
     - script: |
-        helm push $(System.DefaultWorkingDirectory)/NodsJS-web-app-with-Kubernetes-and-Helm/packages/web-app-chart-$(Build.BuildId).tgz oci://staslRegistry.azurecr.io
+        helm push $(HelmDirectory)/packages/web-app-chart-$(Build.BuildId).tgz oci://staslRegistry.azurecr.io
 
 # Had to create a seperate job for the pakcage as azaure devops is masking any 
   # - job: PushPackage
