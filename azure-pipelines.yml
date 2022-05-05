@@ -93,43 +93,34 @@ stages:
 
 
 
-# - stage: Stage_deployment
-#   displayName: Stage
+- stage: Stage_deployment
+  displayName: Deployment
 
-#   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-#   dependsOn: CI
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  dependsOn: CI
   
-#   variables: 
-#   - group: vault secrets - stage
-#   - name: ip_address
-#     value: $(az network public-ip list -g web-app-k8s-resources --query "[?tags.service].ipAddress | [0]" | tr -d '"')
+  variables: 
+  - name: ip_address
+    value: $(az network public-ip list -g web-app-k8s-resources --query "[?tags.service].ipAddress | [0]" | tr -d '"')
 
-  # jobs:
-  # - deployment: deployToStage
-  #   environment:
-  #     name: stage
-  #     resourceType: VirtualMachine
-  #   strategy:
-  #     runOnce:
-  #       deploy:
-  #         steps:
+  jobs:
+  - deployment: deployToStage
+    environment:
+      name: stage
+      resourceType: VirtualMachine
+    strategy:
+      runOnce:
+        deploy:
+          steps:
             
 #           - task: Docker@2
 #             displayName: Login to private registry
 #             inputs:
 #               containerRegistry: 'private-registry'
 #               command: 'login'
-
-#           - script: |
-#               docker rm -f $(docker ps -aq) || true
-#             displayName: Delete all previous containers
               
-#           - script: |
-#               docker pull wtregistry01.azurecr.io/bootcamp-app:$(Build.BuildId)
-#             displayName: Pull latest application image
-              
-              # - script: |
-              #     helm upgrade --install --namespace stage --create-namespace web-app-stage oci://staslregistry.azurecr.io/web-app-chart --version $(Build.BuildId) -f stage-values.yaml --atomic  --set ip_address=$(ip_address)
+          - script: |
+              helm upgrade --install --namespace stage --create-namespace web-app-stage oci://staslregistry.azurecr.io/web-app-chart --version $(Build.BuildId) -f "$(stage_values.secureFilePath)" --atomic  --set ip_address=$(ip_address)
 
 
 #           - script: |
