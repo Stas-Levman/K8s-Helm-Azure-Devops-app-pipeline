@@ -105,9 +105,7 @@ stages:
 
   jobs:
   - deployment: deployToStage
-    environment:
-      name: stage
-      resourceType: VirtualMachine
+    environment: stage
     strategy:
       runOnce:
         deploy:
