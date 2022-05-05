@@ -43,7 +43,7 @@ stages:
         echo $(stage_values.secureFilePath)
   
     - script: |
-        helm lint ./NodsJS-web-app-with-Kubernetes-and-Helm -set-file $(stage_stage.secureFilePath)
+        helm lint ./NodsJS-web-app-with-Kubernetes-and-Helm --set-file $(stage_stage.secureFilePath)
       displayName: Check chart validity
 
   # - job: Push
