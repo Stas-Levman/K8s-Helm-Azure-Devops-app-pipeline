@@ -84,7 +84,7 @@ stages:
 
 
     - script: |
-        helm push ./packages/web-app-chart-$(Build.BuildId).tgz oci://staslRegistry.azurecr.io
+        helm push ./packages/web-app-chart-$(Build.BuildId).tgz oci://staslregistry.azurecr.io
 
 # Had to create a seperate job for the pakcage as azaure devops is masking any 
   # - job: PushPackage
