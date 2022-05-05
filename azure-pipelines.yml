@@ -54,6 +54,16 @@ stages:
     - checkout: NodsJS-web-app-with-Kubernetes-and-Helm
       displayName: Clone Helm chart repo
 
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'k8s-rg'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        arguments: |
+          az --version       
+          az account show
+        # addSpnToEnvironment: true
+
     - task: DownloadSecureFile@1
       name: stage_values
       displayName: Download chart values file
