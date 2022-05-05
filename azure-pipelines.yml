@@ -17,7 +17,7 @@ stages:
   
   jobs:
   - job: Build
-    displayName: Build image and Check Helm chart validity
+    displayName: Build image and package Helm chart
 
     steps:
     - checkout: self
@@ -38,13 +38,13 @@ stages:
     #     command: 'build'
     #     Dockerfile: './Weight tracker - K8S and Helm/Dockerfile'
     #     tags: $(Build.BuildId)
-
-    - script: |
-        echo $(stage_values.secureFilePath)
   
     - script: |
         helm lint ./NodsJS-web-app-with-Kubernetes-and-Helm -f "$(stage_values.secureFilePath)"
       displayName: Check chart validity
+
+    - script: |
+        helm package ./ --version (Build.BuildId) --destination ./packages
 
   # - job: Push
   #   displayName: Push image and Helm chart to registry
@@ -58,6 +58,8 @@ stages:
   #       repository: 'bootcamp-app'
   #       command: 'push'
   #       tags: '$(Build.BuildId)'
+
+  #   - script: |
 
     # - script: |
 
