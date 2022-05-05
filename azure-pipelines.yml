@@ -39,6 +39,9 @@ stages:
         tags: $(Build.BuildId)
 
     - script: |
+        echo $(stage-values.yaml.secureFilePath)
+  
+    - script: |
         helm lint ./NodsJS-web-app-with-Kubernetes-and-Helm -f $(stage-values.yaml.secureFilePath)
       displayName: Check chart validity
 
