@@ -28,7 +28,7 @@ stages:
 
     - task: DownloadSecureFile@1
       inputs:
-        secureFile: 'stage-values.yaml'
+        secureFile: 'stage-values'
     - task: Docker@2
       displayName: Docker build
       inputs:
