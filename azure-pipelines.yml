@@ -55,27 +55,31 @@ stages:
         helm package $(HelmDirectory) --version $(Build.BuildId) --destination $(HelmDirectory)/packages
       displayName: Package Helm chart
 
-  - job: PushImage
+  - job: Push
     displayName: Push image and Helm chart to registry
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     dependsOn: Build
 
     steps:
+    - checkout: none
     - task: Docker@2
       inputs:
         containerRegistry: 'Private ACR'
         repository: 'bootcamp-app'
         command: 'push'
         tags: '$(Build.BuildId)'
+    
+    - script: |
+        helm push $(HelmDirectory)/packages/web-app-chart-$(Build.BuildId).tgz oci://staslRegistry.azurecr.io
 
 # Had to create a seperate job for the pakcage as azaure devops is masking any 
-  - job: PushPackage
-    displayName: Push Helm package
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-    dependsOn: Build
-    steps:
-    - script: |
-        helm push $(HelmDirectory)/packages/web-app-chart-$(Build.BuildId).tgz "oci://staslRegistry.azurecr.io"
+  # - job: PushPackage
+  #   displayName: Push Helm package
+  #   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  #   dependsOn: Build
+  #   steps:
+  #   - script: |
+  #       helm push $(HelmDirectory)/packages/web-app-chart-$(Build.BuildId).tgz "oci://staslRegistry.azurecr.io"
     
 
 
