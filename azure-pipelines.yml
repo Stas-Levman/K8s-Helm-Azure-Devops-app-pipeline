@@ -59,8 +59,8 @@ stages:
         azureSubscription: 'k8s-rg'
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
-        arguments: |
-          az --version       
+        inlineScript: |
+          az --version
           az account show
         # addSpnToEnvironment: true
 
