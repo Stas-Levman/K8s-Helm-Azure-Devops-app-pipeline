@@ -55,7 +55,7 @@ stages:
         helm package $(HelmDirectory) --version $(Build.BuildId) --destination $(HelmDirectory)/packages
       displayName: Package Helm chart
 
-  - job: Push
+  - job: PushImage
     displayName: Push image and Helm chart to registry
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     dependsOn: Build
@@ -68,8 +68,16 @@ stages:
         command: 'push'
         tags: '$(Build.BuildId)'
 
+# Had to create a seperate job for the pakcage as azaure devops is masking any 
+  - job: PushPackage
+    displayName: Push Helm package
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    dependsOn: Build
+    steps:
     - script: |
-        helm push $(HelmDirectory)/packages/web-app-chart-$(Build.BuildId).tgz "oci://staslregistry.azurecr.io"
+        helm push $(HelmDirectory)/packages/web-app-chart-$(Build.BuildId).tgz "oci://staslRegistry.azurecr.io"
+    
+
 
 
 
