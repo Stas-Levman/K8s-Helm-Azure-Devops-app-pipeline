@@ -16,43 +16,39 @@ stages:
   displayName: Build
   
   jobs:
-  - job: Build
-    displayName: Build image
+  # - job: Build
+  #   displayName: Build image
 
-    steps:
-    - checkout: self
-      displayName: Clone latest web-application repo
+  #   steps:
+  #   - checkout: self
+  #     displayName: Clone latest web-application repo
 
-    - task: Docker@2
-      displayName: Docker build
-      inputs:
-        containerRegistry: 'Private ACR'
-        repository: 'bootcamp-app'
-        command: 'build'
-        Dockerfile: './Dockerfile'
-        tags: $(Build.BuildId)
+  #   - task: Docker@2
+  #     displayName: Docker build
+  #     inputs:
+  #       containerRegistry: 'Private ACR'
+  #       repository: 'bootcamp-app'
+  #       command: 'build'
+  #       Dockerfile: './Dockerfile'
+  #       tags: $(Build.BuildId)
 
-  - job: PushImage
-    displayName: Push image
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-    dependsOn: Build
+  # - job: PushImage
+  #   displayName: Push image
+  #   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  #   dependsOn: Build
 
-    steps:
-    - checkout: none
-    - task: Docker@2
-      inputs:
-        containerRegistry: 'Private ACR'
-        repository: 'bootcamp-app'
-        command: 'push'
-        tags: '$(Build.BuildId)'
+  #   steps:
+  #   - checkout: none
+  #   - task: Docker@2
+  #     inputs:
+  #       containerRegistry: 'Private ACR'
+  #       repository: 'bootcamp-app'
+  #       command: 'push'
+  #       tags: '$(Build.BuildId)'
     
   - job: PackageChart
     displayName: Package and push chart
     dependsOn: PushImage
-
-    # variables:
-    # - name: HelmDirectory
-    #   value: ./NodsJS-web-app-with-Kubernetes-and-Helm
 
     steps: 
     - checkout: NodsJS-web-app-with-Kubernetes-and-Helm
@@ -75,6 +71,8 @@ stages:
     - script: |
         helm package ./ --version $(Build.BuildId) --destination ./packages
       displayName: Package Helm chart
+
+
 
     - script: |
         helm push ./packages/web-app-chart-$(Build.BuildId).tgz oci://staslRegistry.azurecr.io
