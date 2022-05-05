@@ -70,7 +70,7 @@ stages:
         tags: '$(Build.BuildId)'
     
     - script: |
-        helm push $(System.DefaultWorkingDirectory)/$(HelmDirectory)/packages/web-app-chart-$(Build.BuildId).tgz oci://staslRegistry.azurecr.io
+        helm push $(System.DefaultWorkingDirectory)/NodsJS-web-app-with-Kubernetes-and-Helm/packages/web-app-chart-$(Build.BuildId).tgz oci://staslRegistry.azurecr.io
 
 # Had to create a seperate job for the pakcage as azaure devops is masking any 
   # - job: PushPackage
