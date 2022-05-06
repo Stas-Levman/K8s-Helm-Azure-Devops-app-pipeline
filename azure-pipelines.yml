@@ -125,7 +125,7 @@ stages:
               helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
               helm repo update
               helm upgrade --install $(releaseName) ingress-nginx/ingress-nginx \
-                --set controller.ingressClassResource.name=$(releaseName) \
+                # --set controller.ingressClassResource.name=$(releaseName) \
                 --namespace stage --create-namespace \
                 --wait 
             displayName: Install nginx controller to get public IP for the application
