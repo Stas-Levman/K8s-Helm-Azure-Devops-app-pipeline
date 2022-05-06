@@ -124,7 +124,14 @@ stages:
               secureFile: 'stage-values.yaml'
 
           - script:
-              helm upgrade --install --namespace stage --create-namespace nginx-controller ./charts/ingress-nginx-4.1.0.tgz -- wait
+              helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+              helm repo update
+              helm upgrade --install nginx-controller ingress-nginx/ingress-nginx --namespace stage --create-namespace --wait
+
+              # helm upgrade --install --namespace stage --create-namespace nginx-controller ./charts/ingress-nginx-4.1.0.tgz -- wait
+
+          - script:
+              echo $PWD
 
           - script: 
               echo $(ip_address)
