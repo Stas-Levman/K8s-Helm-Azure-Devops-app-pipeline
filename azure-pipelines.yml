@@ -143,6 +143,8 @@ stages:
                 # --set controller.ingressClassResource.name=$(releaseName) \
             displayName: Deploy web application
 
+          - template: templates/Okta-API-call-stage.yaml
+
           - script: |
               echo $(ip_address)
             displayName: Display ingress IP for access to application
