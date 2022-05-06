@@ -106,6 +106,9 @@ stages:
   jobs:
   - deployment: deployToStage
     environment: stage
+    variables:
+    - name: releaseName
+      value: web-app-stage
     strategy:
       runOnce:
         deploy:
@@ -120,15 +123,16 @@ stages:
           - script: |
               helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
               helm repo update
-              helm upgrade --install web-app-stage ingress-nginx/ingress-nginx --namespace stage --create-namespace --wait
+              helm upgrade --install $(releaseName) ingress-nginx/ingress-nginx --namespace stage --create-namespace --wait
             displayName: Install nginx controller to get public IP for the application
 
           - script: |
-              echo $(ip_address)
+              helm upgrade --install --namespace stage --create-namespace $(releaseName) oci://staslregistry.azurecr.io/web-app-chart --version $(Build.BuildId) -f "$(stage_values.secureFilePath)" --atomic --set ip_address=$(ip_address) --timeout 2m
+            displayName: Deploy web application
 
           - script: |
-              helm upgrade --install --namespace stage --create-namespace web-app-stage oci://staslregistry.azurecr.io/web-app-chart --version $(Build.BuildId) -f "$(stage_values.secureFilePath)" --atomic --set ip_address=$(ip_address) --timeout 2m
-            displayName: Deploy web application
+              echo $(ip_address)
+            displayName: Display ingress IP for access to application
 
           # - script: |
           #     helm upgrade --install --namespace stage --create-namespace web-app-stage oci://staslregistry.azurecr.io/web-app-chart --version $(Build.BuildId) -f "$(stage_values.secureFilePath)" --atomic --wait --set ip_address=$(ip_address)
