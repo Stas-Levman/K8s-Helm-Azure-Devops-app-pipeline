@@ -125,22 +125,22 @@ stages:
               helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
               helm repo update
               helm upgrade --install $(releaseName) ingress-nginx/ingress-nginx \
-                # --set controller.ingressClassResource.name=$(releaseName) \
                 --namespace stage --create-namespace \
-                --set controller.setAsDefaultIngress=true
+                --set controller.setAsDefaultIngress=true \
                 --atomic \
                 --wait 
+                # --set controller.ingressClassResource.name=$(releaseName) \
             displayName: Install nginx controller to get public IP for the application
 
           - script: |
               helm upgrade --install --namespace stage --create-namespace $(releaseName) oci://staslregistry.azurecr.io/web-app-chart \
                 -f "$(stage_values.secureFilePath)" \
                 --version 338 \
-                # --set controller.ingressClassResource.name=$(releaseName) \
                 --set ip_address=$(ip_address) \
                 --set webApp.spec.imagtag=338 \
                 --timeout 2m \
                 --atomic 
+                # --set controller.ingressClassResource.name=$(releaseName) \
             displayName: Deploy web application
 
           - script: |
