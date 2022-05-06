@@ -128,9 +128,9 @@ stages:
           - script: |
               helm upgrade --install --namespace stage --create-namespace $(releaseName) oci://staslregistry.azurecr.io/web-app-chart \
                 -f "$(stage_values.secureFilePath)" \
-                --version $(Build.Build.Id) \
+                --version $(Build.BuildId) \
                 --set controller.setAsDefaultIngress=true \
-                --set webApp.spec.imagetag=$(Build.Build.Id) \
+                --set webApp.spec.imagetag=$(Build.BuildId) \
                 --set ip_address=$(ip_address) \
                 --timeout 2m \
                 --atomic 
