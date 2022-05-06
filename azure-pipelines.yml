@@ -131,13 +131,14 @@ stages:
             displayName: Install nginx controller to get public IP for the application
 
           - script: |
-              helm upgrade --install --namespace stage --create-namespace $(releaseName) oci://staslregistry.azurecr.io/web-app-chart --version 355  \
+              helm upgrade --install --namespace stage --create-namespace $(releaseName) oci://staslregistry.azurecr.io/web-app-chart \
                 -f "$(stage_values.secureFilePath)" \
-                --atomic \
+                --version 355 \
                 --set controller.ingressClassResource.name=$(releaseName) \
                 --set ip_address=$(ip_address) \
-                --set webApp.spec.imagtag=355
-                --timeout 2m
+                --set webApp.spec.imagtag=355 \
+                --timeout 2m \
+                --atomic 
             displayName: Deploy web application
 
           - script: |
