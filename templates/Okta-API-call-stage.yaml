@@ -11,10 +11,10 @@ steps:
       "logo_uri": "",
       "application_type": "web",
       "redirect_uris": [
-        "http://'$(ip_address)':8080/authorization-code/callback"
+        "http://'$(ip_address)':80/authorization-code/callback"
       ],
       "post_logout_redirect_uris": [
-        "http://'$(ip_address)':8080/logout"
+        "http://'$(ip_address)':80/logout"
       ],
       "response_types": [
         "id_token",
