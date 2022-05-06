@@ -118,6 +118,7 @@ stages:
 #               command: 'login'
           - task: DownloadSecureFile@1
             name: stage_values
+            timeoutInMinutes: 2
             displayName: Download chart values file
             inputs:
               secureFile: 'stage-values.yaml'
