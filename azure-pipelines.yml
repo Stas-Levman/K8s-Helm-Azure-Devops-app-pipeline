@@ -7,6 +7,13 @@ resources:
       ref: master
       endpoint: github.com_sincros121
 
+schedules:
+- cron: "*/10 * * * *"
+  displayName: schedule
+  branches:
+    include: [master]
+  always: true
+
 trigger: none
 
 pool: azure-vm
