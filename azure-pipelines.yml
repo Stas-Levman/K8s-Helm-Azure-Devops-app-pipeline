@@ -85,13 +85,7 @@ stages:
         helm push ./packages/web-app-chart-$(Build.BuildId).tgz oci://staslregistry.azurecr.io
       displayName: Push Helm package to ACR
     
-
-
-
-
-
-
-
+    
 
 - stage: Stage_deployment
   displayName: Deployment
