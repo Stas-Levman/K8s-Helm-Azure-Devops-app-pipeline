@@ -123,12 +123,11 @@ stages:
             inputs:
               secureFile: 'stage-values.yaml'
 
-          - script:
+          - script: |
               helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
               helm repo update
               helm upgrade --install nginx-controller ingress-nginx/ingress-nginx --namespace stage --create-namespace --wait
 
-              # helm upgrade --install --namespace stage --create-namespace nginx-controller ./charts/ingress-nginx-4.1.0.tgz -- wait
 
           - script:
               echo $PWD
@@ -144,6 +143,7 @@ stages:
 
           # - script: |
           #     helm upgrade --install --namespace stage --create-namespace web-app-stage oci://staslregistry.azurecr.io/web-app-chart --version $(Build.BuildId) -f "$(stage_values.secureFilePath)" --atomic --wait --set ip_address=$(ip_address)
+                    # helm upgrade --install --namespace stage --create-namespace nginx-controller ./charts/ingress-nginx-4.1.0.tgz -- wait
 
 #           - script: |
 #               docker create -p 8080:8080 --restart always --name wt wtregistry01.azurecr.io/bootcamp-app:$(Build.BuildId)
