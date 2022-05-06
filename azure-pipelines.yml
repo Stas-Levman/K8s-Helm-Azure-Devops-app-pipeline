@@ -133,10 +133,10 @@ stages:
           - script: |
               helm upgrade --install --namespace stage --create-namespace $(releaseName) oci://staslregistry.azurecr.io/web-app-chart \
                 -f "$(stage_values.secureFilePath)" \
-                --version 335 \
+                --version $(Build.BuildId) \
                 --set controller.ingressClassResource.name=$(releaseName) \
                 --set ip_address=$(ip_address) \
-                --set webApp.spec.imagtag=335 \
+                --set webApp.spec.imagtag=$(Build.BuildId) \
                 --timeout 2m \
                 --atomic 
             displayName: Deploy web application
