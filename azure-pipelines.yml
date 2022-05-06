@@ -30,7 +30,7 @@ stages:
         repository: 'bootcamp-app'
         command: 'build'
         Dockerfile: './Dockerfile'
-        tags: $(Build.BuildId)
+        addPipelineData: false
 
   - job: PushImage
     displayName: Push image
