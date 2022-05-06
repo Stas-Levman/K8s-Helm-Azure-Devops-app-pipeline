@@ -131,7 +131,7 @@ stages:
                 -f "$(stage_values.secureFilePath)" \
                 --version $(Build.BuildId) \
                 --set controller.setAsDefaultIngress=true \
-                --set webApp.spec.imagtag=$(Build.BuildId) \
+                --set webApp.spec.imagetag=$(Build.BuildId) \
                 --set ip_address=$(ip_address) \
                 --timeout 2m \
                 --atomic 
