@@ -127,9 +127,8 @@ stages:
               helm upgrade --install $(releaseName) ingress-nginx/ingress-nginx \
                 --namespace stage --create-namespace \
                 --set controller.setAsDefaultIngress=true \
-                --atomic \
-                --wait 
-                # --set controller.ingressClassResource.name=$(releaseName) \
+                --atomic
+            # --set controller.ingressClassResource.name=$(releaseName) \
             displayName: Install nginx controller to get public IP for the application
 
           - script: |
