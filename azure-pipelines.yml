@@ -119,7 +119,7 @@ stages:
           - script: |
               helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
               helm repo update
-              helm upgrade --install $(releaseName) ingress-nginx/ingress-nginx \
+              helm upgrade --install nginx-controller ingress-nginx/ingress-nginx \
                 --namespace stage --create-namespace \
                 --set controller.setAsDefaultIngress=true \
                 --atomic
