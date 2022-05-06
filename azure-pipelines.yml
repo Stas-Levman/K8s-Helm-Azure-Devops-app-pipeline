@@ -120,7 +120,7 @@ stages:
           - script: |
               helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
               helm repo update
-              helm upgrade --install nginx-controller ingress-nginx/ingress-nginx --namespace stage --create-namespace --wait
+              helm upgrade --install web-app-stage ingress-nginx/ingress-nginx --namespace stage --create-namespace --wait
             displayName: Install nginx controller to get public IP for the application
 
           - script: |
