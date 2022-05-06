@@ -128,18 +128,12 @@ stages:
               helm repo update
               helm upgrade --install nginx-controller ingress-nginx/ingress-nginx --namespace stage --create-namespace --wait
 
-
-          - script:
-              echo $PWD
-
-          - script: 
+          - script: |
               echo $(ip_address)
 
           - script: |
-              helm upgrade --install --namespace stage --create-namespace web-app-stage oci://staslregistry.azurecr.io/web-app-chart --version $(Build.BuildId) -f "$(stage_values.secureFilePath)" --atomic --set ip_address=$(ip_address) ----timeout 2m
+              helm upgrade --install --namespace stage --create-namespace web-app-stage oci://staslregistry.azurecr.io/web-app-chart --version $(Build.BuildId) -f "$(stage_values.secureFilePath)" --atomic --set ip_address=$(ip_address) --timeout 2m
 
-          - script: 
-              echo $(ip_address)
 
           # - script: |
           #     helm upgrade --install --namespace stage --create-namespace web-app-stage oci://staslregistry.azurecr.io/web-app-chart --version $(Build.BuildId) -f "$(stage_values.secureFilePath)" --atomic --wait --set ip_address=$(ip_address)
