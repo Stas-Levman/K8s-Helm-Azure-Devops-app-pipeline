@@ -123,7 +123,7 @@ stages:
                 --set controller.setAsDefaultIngress=true \
                 --atomic
             # --set controller.ingressClassResource.name=$(releaseName) \
-            displayName: Install nginx controller to get public IP for the application
+            displayName: Install nginx controller to get public IP for the application environment variable
 
           - script: |
               helm upgrade --install --namespace stage --create-namespace $(releaseName) oci://staslregistry.azurecr.io/web-app-chart \
