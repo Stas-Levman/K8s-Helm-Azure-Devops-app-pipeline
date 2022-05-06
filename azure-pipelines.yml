@@ -101,6 +101,7 @@ stages:
   - deployment: deployToStage
     environment: stage
     variables:
+    - group: stage-vars
     - name: releaseName
       value: web-app-stage
     strategy:
