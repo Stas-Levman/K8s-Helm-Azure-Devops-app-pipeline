@@ -3,7 +3,7 @@ resources:
   repositories: 
     - repository: Helm-chart
       type: git
-      name: staslevman5/NodsJS web app - Helm chart
+      name: Weight tracker - K8S and Helm/NodsJS web app - Helm chart
       trigger:
         branches:
           include:
