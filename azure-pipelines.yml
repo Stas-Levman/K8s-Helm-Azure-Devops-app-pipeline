@@ -7,14 +7,11 @@ resources:
       ref: master
       endpoint: github.com_sincros121
 
-# schedules:
-# - cron: "*/10 * * * *"
-#   displayName: schedule
-#   branches:
-#     include: [master]
-#   always: true
-
-trigger: none
+trigger:
+  paths:
+    exclude:
+    - README.md
+    - azure-pipelines.yml
 
 pool: azure-vm
 
