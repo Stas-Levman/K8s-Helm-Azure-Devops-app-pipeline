@@ -11,6 +11,9 @@ resources:
           include:
             - master
             - feature/'*'
+        paths:
+          exclude:
+            - README.md
 
 trigger:
   branches:
