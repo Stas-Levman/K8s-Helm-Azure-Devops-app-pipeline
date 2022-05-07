@@ -1,16 +1,13 @@
 
 resources:
   repositories: 
-    - repository: NodsJS-web-app-with-Kubernetes-and-Helm
-      type: github
-      name: sincros121/NodsJS-web-app-with-Kubernetes-and-Helm
-      ref: master
-      endpoint: github.com_sincros121
+    - repository: Helm-chart
+      type: git
+      name: Weight tracker - K8S and Helm/NodsJS web app - Helm chart
       trigger:
         branches:
           include:
             - master
-            - feature/'*'
         paths:
           exclude:
             - README.md
@@ -22,7 +19,6 @@ trigger:
   paths:
     exclude:
     - README.md
-    - azure-pipelines.yml
 
 pool: azure-vm
 
@@ -53,7 +49,7 @@ stages:
     dependsOn: BuildImage
     
     steps:
-      - checkout: NodsJS-web-app-with-Kubernetes-and-Helm
+      - checkout: Helm-chart
         displayName: Clone latest Helm chart
 
       - task: DownloadSecureFile@1
@@ -93,7 +89,7 @@ stages:
     dependsOn: PushImage
 
     steps: 
-    - checkout: NodsJS-web-app-with-Kubernetes-and-Helm
+    - checkout: Helm-chart
       displayName: Clone Helm chart repo
 
     - task: AzureCLI@2
