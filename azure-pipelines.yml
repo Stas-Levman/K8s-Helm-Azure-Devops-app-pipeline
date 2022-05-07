@@ -6,6 +6,11 @@ resources:
       name: sincros121/NodsJS-web-app-with-Kubernetes-and-Helm
       ref: master
       endpoint: github.com_sincros121
+      trigger:
+        branches:
+          include:
+            - master
+            - feature/'*'
 
 trigger:
   branches:
