@@ -1,30 +1,42 @@
-# Node.js Weight Tracker
+# Weight tracker app - Helm pipeline
 
-![Demo](docs/build-weight-tracker-app-demo.gif)
+A CI/CD pipeline I created for the build and deployment of the weight tracker web-app, the pipeline uses Helm to deploy the application to a kubernetes cluster.<br>
+The Helm chart used for the pipeline can be found in this **<a href="https://staslevman5@dev.azure.com/staslevman5/Weight%20tracker%20-%20K8S%20and%20Helm/_git/NodsJS%20web%20app%20-%20Helm%20chart" title="">repository</a>**.<br>
+Please click the link above to understand the chart structure.<br>
 
-This sample application demonstrates the following technologies.
+The pipeline gets triggered only upon commiting or merging into the master branch of both repositories.
+Only two stages exist in this pipeline, Build and Deployment.
 
-* [hapi](https://hapi.dev) - a wonderful Node.js application framework
-* [PostgreSQL](https://www.postgresql.org/) - a popular relational database
-* [Postgres](https://github.com/porsager/postgres) - a new PostgreSQL client for Node.js
-* [Vue.js](https://vuejs.org/) - a popular front-end library
-* [Bulma](https://bulma.io/) - a great CSS framework based on Flexbox
-* [EJS](https://ejs.co/) - a great template library for server-side HTML templates
+---
 
-**Requirements:**
+### CI/CD workflow
+#### Upon triggering of the pipeline the first stage "Build" will do the folowing jobs:
 
-* [Node.js](https://nodejs.org/) 14.x
-* [PostgreSQL](https://www.postgresql.org/) (can be installed locally using Docker)
-* [Free Okta developer account](https://developer.okta.com/) for account registration, login
+1. Build image
+    - Clone this repository (web application repository)
+    - Build the docker image from the Dockerfile with tag of the build ID.
 
-## Install and Configuration
+2. Check validity of chart
+    - Clone Helm chart repository
+    - Download the secure values file
+    - Update chart dependencies
+    - Check chart validity via `helm lint` command
 
-1. Clone or download source files
-1. Run `npm install` to install dependencies
-1. If you don't already have PostgreSQL, set up using Docker
-1. Create a [free Okta developer account](https://developer.okta.com/) and add a web application for this app
-1. Copy `.env.sample` to `.env` and change the `OKTA_*` values to your application
-1. Initialize the PostgreSQL database by running `npm run initdb`
-1. Run `npm run dev` to start Node.js
+##### These two jobs serve as code validation for the Dockerfile and the chart in both repositories before pushing the image/chart to the registry and continuing to deployment. <br>
 
-The associated blog post goes into more detail on how to set up PostgreSQL with Docker and how to configure your Okta account.
+3. Push image
+    - The built image is pushed to the specified registry
+
+4. Package and push chart
+    - Clone Helm chart repository
+    - Login to azure container registry ro ensure Helm can push the chart.
+    - Download the secure values file
+    - Update chart dependencies
+    - Package the Helm folder into .tgz file with the version of the build ID.
+
+
+The "Deployment" stage will commence upon succesfully completing the "Build" stage with the following jobs:
+
+1. Deployment
+    - 
+
