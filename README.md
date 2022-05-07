@@ -1,4 +1,4 @@
-# Weight tracker app - Helm pipeline
+# K8s Helm Azure Devops app pipeline
 
 A CI/CD pipeline I created for the build and deployment of the weight tracker web-app, the pipeline uses Helm to deploy the application to a kubernetes private cluster.<br>
 The Helm chart used for the pipeline can be found in this **<a href="https://github.com/sincros121/NodsJS-web-app-with-Kubernetes-and-Helm.git" title="">repository</a>**.<br>
