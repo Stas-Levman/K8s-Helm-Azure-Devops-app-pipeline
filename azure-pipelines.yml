@@ -60,7 +60,8 @@ stages:
         displayName: Update chart dependencies
     
       - script: |
-          helm lint ./ -f "$(stage_values.secureFilePath)"
+          helm lint ./ 
+          #-f "$(stage_values.secureFilePath)"
         displayName: Check chart validity
         
       
