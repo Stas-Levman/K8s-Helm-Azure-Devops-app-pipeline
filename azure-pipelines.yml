@@ -55,13 +55,18 @@ stages:
       - checkout: NodsJS-web-app-with-Kubernetes-and-Helm
         displayName: Clone latest Helm chart
 
+      - task: DownloadSecureFile@1
+        name: stage_values
+        displayName: Download chart values file
+        inputs:
+          secureFile: 'stage-values.yaml'
+
       - script: |
          helm dependency update ./
         displayName: Update chart dependencies
     
       - script: |
-          helm lint ./ 
-          #-f "$(stage_values.secureFilePath)"
+          helm lint ./ -f "$(stage_values.secureFilePath)"
         displayName: Check chart validity
         
       
