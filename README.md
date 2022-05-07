@@ -52,5 +52,6 @@ The "Deployment" stage will commence upon succesfully completing the "Build" sta
 The pipeline assumes the relavant cloud infrastructe is deployed and ready.<br>
 The usage of ACR for both the image and the chart requires the following environemnet variable to be exported for Helm to be able to push the package to the registry: `HELM_EXPERIMENTAL_OCI=1` <br>
 Other than the values file used in the secure files, also used is azure vault which is conencted to the varibles group in this pipeline to give the API call to OKTA it's secrets.
+The variable `ip_address` uses an `az` command to fetch the public IP created from Azure.
 
 
