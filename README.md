@@ -1,7 +1,7 @@
 # Weight tracker app - Helm pipeline
 
 A CI/CD pipeline I created for the build and deployment of the weight tracker web-app, the pipeline uses Helm to deploy the application to a kubernetes private cluster.<br>
-The Helm chart used for the pipeline can be found in this **<a href="https://staslevman5@dev.azure.com/staslevman5/Weight%20tracker%20-%20K8S%20and%20Helm/_git/NodsJS%20web%20app%20-%20Helm%20chart" title="">repository</a>**.<br>
+The Helm chart used for the pipeline can be found in this **<a href="https://github.com/sincros121/NodsJS-web-app-with-Kubernetes-and-Helm.git" title="">repository</a>**.<br>
 Please click the link above to understand the chart structure.<br>
 
 The pipeline gets triggered only upon commiting or merging into the master branch of both repositories and uses a self hosted VM in the same vnet as the private cluster.
