@@ -110,10 +110,6 @@ stages:
     - script: |
          helm dependency update ./
       displayName: Update chart dependencies
-  
-    # - script: |
-    #     helm lint ./ -f "$(stage_values.secureFilePath)"
-    #   displayName: Check chart validity
 
     - script: |
         helm package ./ --version $(Build.BuildId) --destination ./packages
@@ -131,17 +127,19 @@ stages:
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   dependsOn: CI
   
+
   variables: 
+    # A variable that fetches the IP address created by the ingress controller using tags "service".
   - name: ip_address
     value: $(az network public-ip list -g web-app-k8s-resources --query "[?tags.service].ipAddress | [0]" | tr -d '"')
+  - group: stage-vars
+  - name: releaseName
+    value: web-app-stage
 
   jobs:
   - deployment: deployToStage
     environment: stage
-    variables:
-    - group: stage-vars
-    - name: releaseName
-      value: web-app-stage
+    displayName: Deployment
     strategy:
       runOnce:
         deploy:
@@ -153,7 +151,7 @@ stages:
             inputs:
               secureFile: 'stage-values.yaml'
 
-          # Install nginx contorller first to obtain application public IP to pass to app containers env variables
+          # Install nginx contorller first to obtain application public IP to pass to app containers env variables and OKTA.
           - script: |
               helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
               helm repo update
@@ -174,6 +172,7 @@ stages:
                 --atomic 
             displayName: Deploy web application
 
+          # API call to OKTA to update the URIs to the new IP address.
           - template: templates/Okta-API-call-stage.yaml
 
           - script: |
