@@ -47,6 +47,7 @@ stages:
         Dockerfile: './Dockerfile'
         addPipelineData: false
 
+
   - job: CheckChartValidity
     displayName: Check validity of chart
     dependsOn: BuildImage
